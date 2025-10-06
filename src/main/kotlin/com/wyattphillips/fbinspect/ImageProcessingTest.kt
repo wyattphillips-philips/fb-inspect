@@ -24,6 +24,9 @@ object ImageProcessingTest {
         // Test 4: Mock debug variable
         testMockDebugVariable()
         
+        // Test 5: Dimension validation
+        testDimensionValidation()
+        
         println("All tests completed successfully!")
     }
     
@@ -130,6 +133,34 @@ object ImageProcessingTest {
             println("   - Successfully created ${width}x${height} image from mock data")
         } else {
             println("   - Warning: Insufficient data for ${width}x${height}x${channels} image")
+        }
+    }
+    
+    private fun testDimensionValidation() {
+        println("\n5. Testing Dimension Validation:")
+        
+        val testCases = listOf(
+            Triple(640, 480, 3) to (640 * 480 * 3),  // Common HD resolution RGB
+            Triple(1920, 1080, 3) to (1920 * 1080 * 3), // Full HD RGB  
+            Triple(256, 256, 1) to (256 * 256 * 1),  // Square grayscale
+            Triple(512, 512, 4) to (512 * 512 * 4),  // Square RGBA
+        )
+        
+        for ((dimensions, expectedSize) in testCases) {
+            val (width, height, channels) = dimensions
+            println("   - ${width}x${height}x${channels}: Expected ${expectedSize} bytes")
+            
+            if (expectedSize <= 1024 * 1024) { // Only test smaller images
+                val testData = ByteArray(expectedSize) { (it % 256).toByte() }
+                try {
+                    val image = createImageFromBytes(testData, width, height, channels)
+                    println("     ✓ Successfully created image")
+                } catch (e: Exception) {
+                    println("     ✗ Failed: ${e.message}")
+                }
+            } else {
+                println("     ~ Skipped (too large for test)")
+            }
         }
     }
     

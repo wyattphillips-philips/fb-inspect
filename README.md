@@ -28,12 +28,36 @@ A plugin for Android Studio that provides the ability to visualize byte arrays a
 ## Usage
 
 1. Set a breakpoint in your native C++ code
-2. Start debugging your Android application
+2. Start debugging your Android application  
 3. When stopped at a breakpoint with a byte array variable:
    - Right-click on the variable in the debugger
    - Select "Show as Image" from the context menu
    - Enter the width, height, and number of channels
    - View the rendered image
+
+### Example C++ Code
+
+```cpp
+// Example: OpenCV Mat data
+cv::Mat image(480, 640, CV_8UC3);
+// Fill image with data...
+unsigned char* imageData = image.data;  // <- Set breakpoint here
+
+// Example: Raw byte array
+unsigned char rawImage[640 * 480 * 3];
+// Fill with RGB data...
+// Right-click on 'rawImage' in debugger -> Show as Image
+// Enter: width=640, height=480, channels=3
+```
+
+### Dialog Parameters
+
+- **Width**: Image width in pixels
+- **Height**: Image height in pixels  
+- **Channels**: Color format
+  - `1`: Grayscale (intensity values 0-255)
+  - `3`: RGB (Red, Green, Blue bytes per pixel)
+  - `4`: RGBA (Red, Green, Blue, Alpha bytes per pixel)
 
 ## Supported Variable Types
 
