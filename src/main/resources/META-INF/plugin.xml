@@ -1,0 +1,33 @@
+<idea-plugin>
+    <id>com.wyattphillips.fbinspect</id>
+    <name>FB Inspect - Image Viewer for Native Debugging</name>
+    <vendor email="wyatt@example.com" url="https://github.com/wyattphillips-philips">Wyatt Phillips</vendor>
+
+    <description><![CDATA[
+    A plugin for Android Studio that provides the ability to visualize byte arrays as images during native C++ debugging with LLDB.
+    
+    Features:
+    - View byte arrays as images in the debugger
+    - Configurable width, height, and channels
+    - Support for common image formats (RGB, RGBA, Grayscale)
+    ]]></description>
+
+    <!-- Product and plugin compatibility requirements -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.nativeDebug</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add configuration for variable renderer -->
+        <configurationType implementation="com.wyattphillips.fbinspect.ImageViewerConfigurationType"/>
+    </extensions>
+
+    <actions>
+        <action id="com.wyattphillips.fbinspect.ShowAsImageAction"
+                class="com.wyattphillips.fbinspect.ShowAsImageAction"
+                text="Show as Image"
+                description="Display variable as image with specified dimensions">
+            <add-to-group group-id="DebuggerActions" anchor="last"/>
+        </action>
+    </actions>
+
+</idea-plugin>
