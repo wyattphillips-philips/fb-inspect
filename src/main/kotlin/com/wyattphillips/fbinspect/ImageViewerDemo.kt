@@ -17,9 +17,9 @@ object ImageViewerDemo {
             val dimensionsDialog = action.createDimensionsDialog()
             
             if (dimensionsDialog.showAndGet()) {
-                val width = dimensionsDialog.width
-                val height = dimensionsDialog.height  
-                val channels = dimensionsDialog.channels
+                val width = dimensionsDialog.getImageWidth()
+                val height = dimensionsDialog.getImageHeight()
+                val channels = dimensionsDialog.getImageChannels()
                 
                 println("Selected dimensions: ${width}x${height}x${channels}")
                 

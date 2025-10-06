@@ -28,9 +28,9 @@ class ImageDimensionsDialog : JDialog() {
     private val channelsField = JTextField("3")
     private var result = false
     
-    val width: Int get() = widthField.text.toIntOrNull() ?: 640
-    val height: Int get() = heightField.text.toIntOrNull() ?: 480
-    val channels: Int get() = channelsField.text.toIntOrNull() ?: 3
+    fun getImageWidth(): Int = widthField.text.toIntOrNull() ?: 640
+    fun getImageHeight(): Int = heightField.text.toIntOrNull() ?: 480
+    fun getImageChannels(): Int = channelsField.text.toIntOrNull() ?: 3
     
     init {
         title = "Image Dimensions"
@@ -77,15 +77,19 @@ class ImageDimensionsDialog : JDialog() {
     }
     
     private fun validateInput(): Boolean {
-        if (width <= 0) {
+        val w = getImageWidth()
+        val h = getImageHeight()
+        val c = getImageChannels()
+        
+        if (w <= 0) {
             JOptionPane.showMessageDialog(this, "Width must be positive")
             return false
         }
-        if (height <= 0) {
+        if (h <= 0) {
             JOptionPane.showMessageDialog(this, "Height must be positive")
             return false
         }
-        if (channels !in 1..4) {
+        if (c !in 1..4) {
             JOptionPane.showMessageDialog(this, "Channels must be 1, 3, or 4")
             return false
         }
